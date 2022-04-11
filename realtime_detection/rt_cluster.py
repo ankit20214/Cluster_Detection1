@@ -108,7 +108,6 @@ def chk_cluster():
     clustered_buses_data = []
     start = time.time()
     temp_list = list()
-    print(len(pb_data_dict), "dict")
     for bus in pb_data_dict.keys():
         bus_data_df = pd.DataFrame.from_dict(pb_data_dict[bus])
         if len(bus_data_df) != 0:
