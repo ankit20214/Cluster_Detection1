@@ -55,7 +55,7 @@ def save_to_dict():
         # print(entity)
         vehicle_id, vehicle_lat, vehicle_lon, vehicle_route_id, vehicle_timestamp = get_entity_data(entity)
         if pb_data_dict.get(vehicle_id):
-            if not (int(vehicle_timestamp) in pb_data_dict[vehicle_id]['timestamp'] and vehicle_lat in pb_data_dict[vehicle_id]['lat'] and vehicle_lon in pb_data_dict[vehicle_id]['lng']):
+            if not (datetime.fromtimestamp(int(vehicle_timestamp)) in pb_data_dict[vehicle_id]['timestamp'] and vehicle_lat in pb_data_dict[vehicle_id]['lat'] and vehicle_lon in pb_data_dict[vehicle_id]['lng']):
                 pb_data_dict[vehicle_id]['lat'].append(vehicle_lat)
                 pb_data_dict[vehicle_id]['lng'].append(vehicle_lon)
                 pb_data_dict[vehicle_id]['timestamp'].append(datetime.fromtimestamp(int(vehicle_timestamp)))
@@ -108,6 +108,7 @@ def chk_cluster():
     clustered_buses_data = []
     start = time.time()
     temp_list = list()
+    print(len(pb_data_dict), "dict")
     for bus in pb_data_dict.keys():
         bus_data_df = pd.DataFrame.from_dict(pb_data_dict[bus])
         if len(bus_data_df) != 0:
@@ -119,6 +120,7 @@ def chk_cluster():
             if len(unique_clusters) > 1:
                 bus_data = cluster_json_data(bus,pb_data_dict)
                 print('cluster detected for ',bus,bus_data)
+                print(pb_data_dict[bus])
                 clustered_buses_data.append(bus_data)
                 temp_list.append(bus)
             else:
