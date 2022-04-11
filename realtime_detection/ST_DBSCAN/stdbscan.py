@@ -61,14 +61,16 @@ class STDBSCAN(object):
         max_time = center_point[2] + timedelta(seconds=self.temporal_threshold)
         matrix = matrix[(matrix[:, 2] >= min_time) &
                         (matrix[:, 2] <= max_time), :]
-        # filter by distance
-        tmp = (matrix[:, 0]-center_point[0])*(matrix[:, 0]-center_point[0]) + \
-            (matrix[:, 1]-center_point[1])*(matrix[:, 1]-center_point[1])
-        neigborhood = matrix[tmp <= (
-            self.spatial_threshold*self.spatial_threshold), 4].tolist()
-        neigborhood.remove(index_center)
+         # filter by distance
+        try:
+            tmp = (matrix[:, 0] - center_point[0]) * (matrix[:, 0] - center_point[0]) + \
+                  (matrix[:, 1] - center_point[1]) * (matrix[:, 1] - center_point[1])
+            neigborhood = matrix[tmp <= (self.spatial_threshold * self.spatial_threshold), 4].tolist()
+            neigborhood.remove(index_center)
 
-        return neigborhood
+            return neigborhood
+        except:
+            return []
 
     def run(self, df):
         """
