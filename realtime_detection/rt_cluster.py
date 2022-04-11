@@ -55,7 +55,7 @@ def save_to_dict():
         # print(entity)
         vehicle_id, vehicle_lat, vehicle_lon, vehicle_route_id, vehicle_timestamp = get_entity_data(entity)
         if pb_data_dict.get(vehicle_id):
-            if int(vehicle_timestamp) not in pb_data_dict[vehicle_id]['timestamp'] and (not (vehicle_lat in pb_data_dict[vehicle_id]['lat'] and pb_data_dict[vehicle_id]['lng'])):
+            if not (int(vehicle_timestamp) in pb_data_dict[vehicle_id]['timestamp'] and vehicle_lat in pb_data_dict[vehicle_id]['lat'] and vehicle_lon in pb_data_dict[vehicle_id]['lng']):
                 pb_data_dict[vehicle_id]['lat'].append(vehicle_lat)
                 pb_data_dict[vehicle_id]['lng'].append(vehicle_lon)
                 pb_data_dict[vehicle_id]['timestamp'].append(datetime.fromtimestamp(int(vehicle_timestamp)))
